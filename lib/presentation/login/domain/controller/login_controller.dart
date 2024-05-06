@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:mystore/presentation/authentication/domain/controller/user_controller.dart';
 
 import '../../../../common/loaders/loaders.dart';
 import '../../../../domain/repositories/authentication/authentication_repository.dart';
@@ -19,6 +20,7 @@ class LoginController extends GetxController {
   final email = TextEditingController();
   final password = TextEditingController();
   GlobalKey<FormState> loginKey = GlobalKey<FormState>();
+  final userController = Get.put(UserController());
 
 
   @override
@@ -28,7 +30,7 @@ class LoginController extends GetxController {
     super.onInit();
   }
 
-  /// login
+  /// login with email & password
   void login() async {
     try {
       // Start loading
@@ -56,6 +58,40 @@ class LoginController extends GetxController {
       // Log in
       await AuthenticationRepository.instance
           .loginWithEmailAndPassword(email.text.trim(), password.text.trim());
+
+      // remove loader
+      FullScreenLoader.stopLoading();
+
+      // Redirect
+      AuthenticationRepository.instance.screenRedirect();
+    } catch (e) {
+      // remove loader
+      FullScreenLoader.stopLoading();
+      Loaders.errorSnackBar(title: 'Oh Snap', message: e.toString());
+    }
+  }
+
+  /// Google sigin authentication
+  Future<void> googleSigIn() async {
+
+    try {
+      // Start loading
+      FullScreenLoader.openLoadingDialog(
+          "Logging you in..", AppImages.productImage1);
+
+      // Check internet connectivity
+      final isConnected = await NetworkManager.instance.isConnected();
+      if (!isConnected) {
+        FullScreenLoader.stopLoading();
+        return;
+      }
+
+      // Google Authentication
+      final userCredentials =  await AuthenticationRepository.instance.sigInWithGoogle();
+      // Save user record
+      await userController.saveUserRecord(userCredentials);
+
+
 
       // remove loader
       FullScreenLoader.stopLoading();
