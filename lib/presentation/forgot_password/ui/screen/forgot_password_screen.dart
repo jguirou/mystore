@@ -1,0 +1,67 @@
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:mystore/presentation/login/ui/screen/login_screen.dart';
+import 'package:mystore/presentation/reset_password/ui/screen/reset_password_screen.dart';
+import 'package:mystore/utils/constants/sizes.dart';
+
+import '../../../../utils/constants/texts.dart';
+
+class ForgotPasswordScreen extends StatelessWidget {
+  const ForgotPasswordScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        actions: [
+          IconButton(
+              onPressed: ()=> Get.to(()=>const LoginScreen()),
+              icon: const Icon(Icons.clear),
+          ),
+        ],
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(AppSizes.defaultSpace),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              /// forgot password titles && subTitles header
+              Text(AppTexts.forgetPasswordTitle, style: Theme.of(context).textTheme.headlineMedium),
+              const SizedBox(height: AppSizes.spaceBtwItems),
+              Text(AppTexts.forgetPasswordSubTitle, style: Theme.of(context).textTheme.bodyMedium),
+              const SizedBox(height: AppSizes.spaceBtwSections * 2),
+              /// Form
+              /// email fields
+              Form(
+                  child: TextFormField(
+                    decoration: const InputDecoration(
+                      prefixIcon: Icon(Icons.email),
+                      labelText: AppTexts.email,
+
+                    ),
+                  )
+              ),
+              const SizedBox(height: AppSizes.spaceBtwItems),
+
+              /// Submit button
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                    onPressed: ()=> Get.off(()=> const ResetPasswordScreen()),
+                    child: const Text(AppTexts.submit)
+                ),
+              ),
+
+
+
+
+
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
