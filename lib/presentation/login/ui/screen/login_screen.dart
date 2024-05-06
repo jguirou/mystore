@@ -6,6 +6,7 @@ import 'package:mystore/utils/helpers/helper_functions.dart';
 
 import '../../../../utils/constants/texts.dart';
 import '../../../../common/form_divider.dart';
+import '../../domain/controller/login_controller.dart';
 import '../widgets/login_form.dart';
 import '../widgets/login_header.dart';
 import '../../../../common/social_buttons.dart';
@@ -15,6 +16,7 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final  controller = Get.put(LoginController());
     final dark = HelperFunctions.isDarkMode(context);
 
     final TextEditingController emailController = TextEditingController();

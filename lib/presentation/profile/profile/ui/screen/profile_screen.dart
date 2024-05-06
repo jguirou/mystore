@@ -4,6 +4,7 @@ import 'package:get/get_navigation/get_navigation.dart';
 import 'package:mystore/common/appBar/app_bar.dart';
 import 'package:mystore/common/list_tiles/settings_menu_tile.dart';
 import 'package:mystore/common/texts/section_heading.dart';
+import 'package:mystore/domain/repositories/authentication/authentication_repository.dart';
 import 'package:mystore/presentation/profile/edit_profile/ui/screens/edit_profile_screen.dart';
 import 'package:mystore/presentation/profile/my_addresses/my_addresses/ui/screen/my_addresses_screen.dart';
 import 'package:mystore/presentation/profile/my_orders/ui/screen%20/my_orders_screen.dart';
@@ -144,13 +145,13 @@ class ProfileScreen extends StatelessWidget {
                   SizedBox(
                       width: double.infinity,
                       child: OutlinedButton(
-                          onPressed: () {},
+                          onPressed: ()=> AuthenticationRepository.instance.logout(),
                           child: const Text(
                             'Logout',
                           ))),
                   const SizedBox(
                     height: AppSizes.spaceBtwSections / 2,
-                  ),
+                  ), 
                 ],
               ),
             ),
