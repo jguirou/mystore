@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:mystore/common/loaders/loaders.dart';
 import 'package:mystore/domain/repositories/user/user_repository.dart';
 
-import '../../../../domain/entities/user/user_model.dart';
+import '../entities/user/user_model.dart';
 
 class UserController extends GetxController {
   static UserController get instance => Get.find();

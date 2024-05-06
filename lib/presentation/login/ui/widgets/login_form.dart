@@ -13,10 +13,9 @@ import '../../domain/controller/login_controller.dart';
 
 class LoginForm extends StatelessWidget {
   const LoginForm({
-    super.key, required this.emailController, required this.passwordController,
+    super.key,
   });
-  final TextEditingController emailController;
-  final TextEditingController passwordController;
+
 
   @override
   Widget build(BuildContext context) {

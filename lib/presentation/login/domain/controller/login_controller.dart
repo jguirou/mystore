@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:mystore/presentation/authentication/domain/controller/user_controller.dart';
+import 'package:mystore/domain/controller/user_controller.dart';
 
 import '../../../../common/loaders/loaders.dart';
 import '../../../../domain/repositories/authentication/authentication_repository.dart';

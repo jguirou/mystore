@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mystore/presentation/forgot_password/domain/controller/forgot_password_controller.dart';
 import 'package:mystore/presentation/login/ui/screen/login_screen.dart';
 import 'package:mystore/presentation/reset_password/ui/screen/reset_password_screen.dart';
 import 'package:mystore/utils/constants/sizes.dart';
+import 'package:mystore/utils/validators/validation.dart';
 
 import '../../../../utils/constants/texts.dart';
 
@@ -11,6 +13,7 @@ class ForgotPasswordScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(ForgotPasswordController());
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -35,7 +38,10 @@ class ForgotPasswordScreen extends StatelessWidget {
               /// Form
               /// email fields
               Form(
+                key: controller.forgotPasswordFormKey,
                   child: TextFormField(
+                    controller: controller.email,
+                    validator: (value)=> Validator.validateEmail(value),
                     decoration: const InputDecoration(
                       prefixIcon: Icon(Icons.email),
                       labelText: AppTexts.email,
@@ -49,7 +55,7 @@ class ForgotPasswordScreen extends StatelessWidget {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                    onPressed: ()=> Get.off(()=> const ResetPasswordScreen()),
+                    onPressed: ()=> controller.sendPasswordResetEmail(),
                     child: const Text(AppTexts.submit)
                 ),
               ),

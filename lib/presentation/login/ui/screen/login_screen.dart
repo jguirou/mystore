@@ -30,7 +30,7 @@ class LoginScreen extends StatelessWidget {
               /// logo, title & subtitle
               const LoginHeader(),
               /// Form
-               LoginForm(emailController: emailController,passwordController: passwordController),
+               const LoginForm(),
 
               /// or sign in with Divider
               FormDivider(dark: dark, dividerText: AppTexts.orSignInWith.capitalize!,),
