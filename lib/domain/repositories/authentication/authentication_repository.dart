@@ -6,6 +6,7 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:mystore/domain/repositories/user/user_repository.dart';
 import 'package:mystore/navigation_menu.dart';
 import 'package:mystore/presentation/email_verification/ui/screen/email_verification_screen.dart';
 import 'package:mystore/presentation/login/ui/screen/login_screen.dart';
@@ -21,6 +22,9 @@ class AuthenticationRepository extends GetxController{
   // Variables
   final deviceStorage = GetStorage();
   final _auth = FirebaseAuth.instance;
+
+  // Get authenticated user Data
+  User? get authUser => _auth.currentUser;
 
   @override
   void onReady(){
@@ -92,7 +96,23 @@ class AuthenticationRepository extends GetxController{
   }
 
   /// [ReAuthenticate] - ReAuthenticate user
+  Future<void> reAuthenticateWithEmailAndPassword(String email, String password) async {
+    try {
+      AuthCredential credential = EmailAuthProvider.credential(email: email, password: password);
+      await _auth.currentUser!.reauthenticateWithCredential(credential);
 
+    } on FirebaseAuthException catch(e){
+      throw CustomFirebaseAuthExceptions(e.code).message;
+    } on FirebaseException catch (e){
+      throw CustomFirebaseExceptions(e.code).message;
+
+    } on FormatException catch(_){
+      throw CustomFormatException();
+
+    } catch (e){
+      throw 'Something went wrong. Please try again';
+    }
+  }
   /// [EmailVerification] - Mail verification
   Future<void> sendEmailVerification() async {
     try {
@@ -186,4 +206,22 @@ class AuthenticationRepository extends GetxController{
 
 
 /// Delete user - Remove user auth and firebase account.
+  Future<void> deleteAccount() async {
+    try {
+
+      await UserRepository.instance.removeUserRecord(_auth.currentUser!.uid);
+       await _auth.currentUser?.delete();
+
+    } on FirebaseAuthException catch(e){
+      throw CustomFirebaseAuthExceptions(e.code).message;
+    } on FirebaseException catch (e){
+      throw CustomFirebaseExceptions(e.code).message;
+
+    } on FormatException catch(_){
+      throw CustomFormatException();
+
+    } catch (e){
+      throw 'Something went wrong. Please try again';
+    }
+  }
 }

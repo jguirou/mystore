@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:mystore/common/appBar/app_bar.dart';
 import 'package:mystore/common/list_tiles/settings_menu_tile.dart';
 import 'package:mystore/common/texts/section_heading.dart';
+import 'package:mystore/domain/controller/user_controller.dart';
 import 'package:mystore/domain/repositories/authentication/authentication_repository.dart';
 import 'package:mystore/presentation/profile/edit_profile/ui/screens/edit_profile_screen.dart';
 import 'package:mystore/presentation/profile/my_addresses/my_addresses/ui/screen/my_addresses_screen.dart';
@@ -20,6 +22,7 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(UserController());
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -39,12 +42,14 @@ class ProfileScreen extends StatelessWidget {
                             .apply(color: AppColors.white),
                       ),
                     ),
-                    UserProfileTile(
-                      image: AppImages.animalIcon,
-                      userName: 'Jean Guirou',
-                      userMail: 'jeanguirou@yahoo.com',
-                      onEditPressed: () =>
-                          Get.to(() => const EditProfileScreen()),
+                    Obx(
+                      ()=> UserProfileTile(
+                        image: AppImages.animalIcon,
+                        userName: controller.user.value.fullName,
+                        userMail: controller.user.value.email,
+                        onEditPressed: () =>
+                            Get.to(() => const EditProfileScreen()),
+                      ),
                     ),
 
                     const SizedBox(height: AppSizes.spaceBtwSections),

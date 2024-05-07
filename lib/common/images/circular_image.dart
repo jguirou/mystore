@@ -21,7 +21,7 @@ class CircularImage extends StatelessWidget {
   final double width, height, padding;
   final Color? overlayColor;
   final Color? backgroundColor;
-  final String image;
+  final String? image;
   final bool isNetworkImage;
   final BoxFit? fit;
 
@@ -38,7 +38,7 @@ class CircularImage extends StatelessWidget {
       ),
       child: Image(
         fit: fit,
-        image: const AssetImage(AppImages.clothIcon),
+        image:  AssetImage(image ?? AppImages.clothIcon),
         color: overlayColor,
       ),
     );

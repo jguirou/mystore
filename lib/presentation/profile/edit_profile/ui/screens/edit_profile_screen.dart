@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:mystore/domain/controller/user_controller.dart';
 import 'package:mystore/utils/constants/colors.dart';
 import 'package:mystore/utils/constants/image_strings.dart';
 import 'package:mystore/utils/constants/sizes.dart';
@@ -8,6 +10,7 @@ import '../../../../../common/appBar/app_bar.dart';
 import '../../../../../common/images/circular_image.dart';
 import '../../../../../common/texts/section_heading.dart';
 import '../widget/edit_profile_tile.dart';
+import 'change_name.dart';
 
 class EditProfileScreen extends StatelessWidget {
   const EditProfileScreen({super.key});
@@ -15,6 +18,7 @@ class EditProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dark = HelperFunctions.isDarkMode(context);
+    final controller = Get.put(UserController());
     return Scaffold(
       appBar: CustomAppBar(
         showBackArrow: true,
@@ -32,7 +36,7 @@ class EditProfileScreen extends StatelessWidget {
               CircularImage(
                 height: 80,
                 width: 80,
-                image: AppImages.animalIcon,
+                image: AppImages.clothIcon,
                 backgroundColor: dark ? AppColors.darkGrey : AppColors.grey,
               ),
               TextButton(
@@ -50,13 +54,15 @@ class EditProfileScreen extends StatelessWidget {
                 showActionButton: false,
               ),
               const SizedBox(height: AppSizes.spaceBtwItems),
-              const EditProfileTile(
-                title: 'Jean Guirou',
+               EditProfileTile(
+                title: controller.user.value.fullName,
                 leading: 'Name',
+                 onPressed: ()=> Get.to(()=>const ChangeName()),
               ),
-              const EditProfileTile(
-                title: 'jean_guirou',
+               EditProfileTile(
+                title: controller.user.value.username,
                 leading: 'UserName',
+
               ),
 
               /// Personal Information
@@ -70,17 +76,17 @@ class EditProfileScreen extends StatelessWidget {
                 showActionButton: false,
               ),
               const SizedBox(height: AppSizes.spaceBtwItems),
-              const EditProfileTile(
-                title: '4509',
+               EditProfileTile(
+                title: controller.user.value.id,
                 leading: 'User ID',
                 trailing: Icons.copy,
               ),
-              const EditProfileTile(
-                title: 'jeanguirou@yahoo.com',
+               EditProfileTile(
+                title: controller.user.value.email,
                 leading: 'E-Mail',
               ),
-              const EditProfileTile(
-                title: '0700000',
+               EditProfileTile(
+                title: controller.user.value.phoneNumber,
                 leading: 'Phone Number',
               ),
               const EditProfileTile(
@@ -99,7 +105,7 @@ class EditProfileScreen extends StatelessWidget {
               const SizedBox(height: AppSizes.spaceBtwItems / 2),
 
               TextButton(
-                onPressed: () {},
+                onPressed: ()=> controller.deleteAccountWarningPopup(),
                 child: const Text(
                   'Close account',
                   style: TextStyle(color: Colors.red),

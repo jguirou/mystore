@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mystore/domain/repositories/user/user_repository.dart';
 import 'package:mystore/presentation/shop/home/cart/ui/screen/cart_screen.dart';
+import 'package:mystore/utils/shimmer/custom_shimmer.dart';
 
 import '../../../../../../common/appBar/app_bar.dart';
 import '../../../../../../common/products_card/card_counter_icon.dart';
+import '../../../../../../domain/controller/user_controller.dart';
 import '../../../../../../utils/constants/colors.dart';
 import '../../../../../../utils/constants/texts.dart';
 
@@ -15,6 +18,7 @@ class HomeAppBar extends StatelessWidget  {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(UserController());
     return CustomAppBar(
       title: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -26,12 +30,22 @@ class HomeAppBar extends StatelessWidget  {
                 .labelMedium!
                 .apply(color: AppColors.grey),
           ),
-          Text(
-            AppTexts.homeAppBarSubTitle,
-            style: Theme.of(context)
-                .textTheme
-                .headlineSmall!
-                .apply(color: AppColors.white),
+          Obx(
+            (){
+              if(controller.profileLoading.value){
+                // Show a shimmer loader while user profile is being loaded
+                return const CustomShimmerEffects(width: 80, height: 15);
+              } else {
+                return Text(
+                  controller.user.value.fullName,
+                  style: Theme.of(context)
+                      .textTheme
+                      .headlineSmall!
+                      .apply(color: AppColors.white),
+                );
+              }
+
+            }
           )
         ],
       ),
