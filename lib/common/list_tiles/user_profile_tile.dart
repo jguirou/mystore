@@ -21,9 +21,10 @@ class UserProfileTile extends StatelessWidget {
       trailing: IconButton(onPressed: onEditPressed, icon: const Icon(Icons.edit, color: AppColors.grey,)),
       leading: CircularImage(
         image: image,
+        isNetworkImage: true,
       ),
       title: Text(userName, style: Theme.of(context).textTheme.headlineSmall!.apply(color: AppColors.white),),
-      subtitle: Text(userMail, style: Theme.of(context).textTheme.bodyMedium!.apply(color: AppColors.white)),
+      subtitle: Text(userMail, style: Theme.of(context).textTheme.bodyMedium!.apply(color: AppColors.white), maxLines: 1,overflow: TextOverflow.ellipsis,),
     );
   }
 }

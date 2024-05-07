@@ -9,6 +9,7 @@ import 'package:mystore/utils/helpers/helper_functions.dart';
 import '../../../../../common/appBar/app_bar.dart';
 import '../../../../../common/images/circular_image.dart';
 import '../../../../../common/texts/section_heading.dart';
+import '../../../../../utils/shimmer/custom_shimmer.dart';
 import '../widget/edit_profile_tile.dart';
 import 'change_name.dart';
 
@@ -33,14 +34,23 @@ class EditProfileScreen extends StatelessWidget {
           padding: const EdgeInsets.all(AppSizes.defaultSpace / 1.5),
           child: Column(
             children: [
-              CircularImage(
-                height: 80,
-                width: 80,
-                image: AppImages.clothIcon,
-                backgroundColor: dark ? AppColors.darkGrey : AppColors.grey,
+              Obx(
+                  (){
+                    final networkImage = controller.user.value.profilePicture;
+                    final image = networkImage.isNotEmpty ? networkImage : AppImages.animalIcon;
+                    return controller.imageLoading.value
+                        ? const CustomShimmerEffects(width: 55, height: 55)
+                        : CircularImage(
+                      height: 80,
+                      width: 80,
+                      image: image,
+                      backgroundColor: dark ? AppColors.darkGrey : AppColors.grey,
+                      isNetworkImage: networkImage.isNotEmpty,
+                    );
+                  }
               ),
               TextButton(
-                  onPressed: () {},
+                  onPressed: () => controller.uploadUserProfilePicture(),
                   child: const Text('Change profile picture')),
 
               /// Profile Information

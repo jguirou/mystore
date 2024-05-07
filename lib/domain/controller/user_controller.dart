@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:mystore/common/loaders/loaders.dart';
 import 'package:mystore/domain/repositories/authentication/authentication_repository.dart';
 import 'package:mystore/domain/repositories/user/user_repository.dart';
@@ -18,7 +19,8 @@ class UserController extends GetxController {
   static UserController get instance => Get.find();
 
   final userRepository = Get.put(UserRepository());
-  final profileLoading =  false.obs;
+  final profileLoading = false.obs;
+  final imageLoading = false.obs;
   Rx<UserModel> user = UserModel.empty().obs;
   final hidePassword = true.obs;
   final verifyEmail = TextEditingController();
@@ -27,80 +29,77 @@ class UserController extends GetxController {
 
   @override
   void onInit() {
-
     super.onInit();
     fetchUserRecord();
-
   }
-
-
 
   /// Fetch user record
   Future<void> fetchUserRecord() async {
-    try{
-      profileLoading.value =  true;
+    try {
+      profileLoading.value = true;
       final user = await userRepository.fetchUserDetails();
       this.user(user);
-
-    }catch (e){
+    } catch (e) {
       user(UserModel.empty());
-    } finally{
-      profileLoading.value =  false;
+    } finally {
+      profileLoading.value = false;
     }
   }
 
   Future<void> saveUserRecord(UserCredential? userCredential) async {
+    try {
+      // First update Rx User and then check if user data is already stored. if not stored new data.
+      await fetchUserRecord();
+      if (user.value.id.isEmpty) {
+        if (userCredential != null) {
+          // Convert name to first and last name
+          final nameParts =
+              UserModel.nameParts(userCredential.user?.displayName ?? '');
+          final userName = UserModel.generateUserName(
+              userCredential.user?.displayName ?? '');
 
-    try{
-      if(userCredential != null){
-        // Convert name to first and last name
-        final nameParts  = UserModel.nameParts(userCredential.user?.displayName ?? '');
-        final userName = UserModel.generateUserName(userCredential.user?.displayName ?? '');
+          // Map data
+          final user = UserModel(
+              id: userCredential.user!.uid,
+              firstName: nameParts[0],
+              lastName:
+                  nameParts.length > 1 ? nameParts.sublist(1).join(' ') : '',
+              username: userName,
+              email: userCredential.user!.email ?? '',
+              phoneNumber: userCredential.user!.phoneNumber ?? '',
+              profilePicture: userCredential.user!.photoURL ?? '');
 
-        // Map data
-        final user = UserModel(
-            id: userCredential.user!.uid,
-            firstName: nameParts[0],
-            lastName: nameParts.length > 1 ?  nameParts.sublist(1).join(' '): '',
-            username: userName,
-            email: userCredential.user!.email ?? '',
-            phoneNumber: userCredential.user!.phoneNumber ?? '',
-            profilePicture: userCredential.user!.photoURL ?? '');
-
-
-        // Save user data
-        await userRepository.saveUserRecord(user);
-
+          // Save user data
+          await userRepository.saveUserRecord(user);
+        }
       }
-
-    } catch (e){
+    } catch (e) {
       Loaders.warningSnackBar(
           title: 'Data not saved',
-        message: 'Something went wrong while saving your information. You can re-save your data in your profile.'
-      );
+          message:
+              'Something went wrong while saving your information. You can re-save your data in your profile.');
     }
   }
 
   /// Delete account warning
-  void deleteAccountWarningPopup(){
+  void deleteAccountWarningPopup() {
     Get.defaultDialog(
-      contentPadding: const EdgeInsets.all(AppSizes.md),
-      title: 'Delete Account',
-      middleText: 'Are you sure you want to delete your account permanently? This action is not reversible and all your data will be removed permanently.',
-      confirm: ElevatedButton(
-          onPressed: () async => deleteUserAccount(),
-          style: ElevatedButton.styleFrom(backgroundColor: Colors.red,side: const BorderSide(color: Colors.red)),
-          child: const Padding(
+        contentPadding: const EdgeInsets.all(AppSizes.md),
+        title: 'Delete Account',
+        middleText:
+            'Are you sure you want to delete your account permanently? This action is not reversible and all your data will be removed permanently.',
+        confirm: ElevatedButton(
+            onPressed: () async => deleteUserAccount(),
+            style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.red,
+                side: const BorderSide(color: Colors.red)),
+            child: const Padding(
               padding: EdgeInsets.symmetric(horizontal: AppSizes.lg),
-            child: Text('Delete'),
-          )
-      ),
-      cancel: OutlinedButton(
-          onPressed: ()=> Navigator.of(Get.overlayContext!).pop(),
-          child: const Text('Cancel'))
-
-
-    );
+              child: Text('Delete'),
+            )),
+        cancel: OutlinedButton(
+            onPressed: () => Navigator.of(Get.overlayContext!).pop(),
+            child: const Text('Cancel')));
   }
 
   /// Delete user account
@@ -112,26 +111,22 @@ class UserController extends GetxController {
 
       // First reAuthenticate user
       final auth = AuthenticationRepository.instance;
-      final provider = auth.authUser!.providerData.map((e) => e.providerId).first;
+      final provider =
+          auth.authUser!.providerData.map((e) => e.providerId).first;
       // reverify auth email
       print("provider check");
-      if(provider.isNotEmpty){
-        if(provider == 'google.com'){
+      if (provider.isNotEmpty) {
+        if (provider == 'google.com') {
           print("provider google");
           await auth.sigInWithGoogle();
           await auth.deleteAccount();
           FullScreenLoader.stopLoading();
-          Get.offAll(()=> const LoginScreen());
-
-
-        }else if(provider == 'password'){
+          Get.offAll(() => const LoginScreen());
+        } else if (provider == 'password') {
           FullScreenLoader.stopLoading();
-          Get.to(()=> const ReAuthenticateUserLoginForm());
+          Get.to(() => const ReAuthenticateUserLoginForm());
         }
       }
-
-
-
     } catch (e) {
       // remove loader
       FullScreenLoader.stopLoading();
@@ -160,19 +155,52 @@ class UserController extends GetxController {
       }
       // Save data if rememberMe is selected
 
-
-
       await AuthenticationRepository.instance
-          .reAuthenticateWithEmailAndPassword(verifyEmail.text.trim(), verifyPassword.text.trim());
+          .reAuthenticateWithEmailAndPassword(
+              verifyEmail.text.trim(), verifyPassword.text.trim());
       await AuthenticationRepository.instance.deleteAccount();
 
       // remove loader
       FullScreenLoader.stopLoading();
-      Get.offAll(()=> const LoginScreen());
+      Get.offAll(() => const LoginScreen());
     } catch (e) {
       // remove loader
       FullScreenLoader.stopLoading();
       Loaders.errorSnackBar(title: 'Oh Snap', message: e.toString());
+    }
+  }
+
+  /// Upload profile image
+  uploadUserProfilePicture() async {
+    try {
+      final image = await ImagePicker().pickImage(
+        source: ImageSource.gallery,
+        imageQuality: 70,
+        maxHeight: 512,
+        maxWidth: 512,
+      );
+      if(image != null){
+
+        imageLoading.value = true;
+        // Upload image
+        final imageUrl = await userRepository.uploadImage('Users/Images/Profile/', image);
+
+        // Update User Image Record
+        Map<String, dynamic> json = {'profilePicture': imageUrl};
+        await userRepository.updateSingleField(json);
+
+        user.value.profilePicture = imageUrl;
+        user.refresh();
+        Loaders.successSnackBar(title: 'Congratulations', message: 'Your profile Image has been updated.');
+      }
+
+    } catch (e){
+      print(e.toString());
+
+      Loaders.successSnackBar(title: 'OhSnap', message: e.toString());
+
+    } finally{
+      imageLoading.value = false;
     }
   }
 }

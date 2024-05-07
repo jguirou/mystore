@@ -12,6 +12,7 @@ import 'package:mystore/presentation/profile/my_addresses/my_addresses/ui/screen
 import 'package:mystore/presentation/profile/my_orders/ui/screen%20/my_orders_screen.dart';
 import 'package:mystore/utils/constants/colors.dart';
 import 'package:mystore/utils/constants/image_strings.dart';
+import 'package:mystore/utils/shimmer/custom_shimmer.dart';
 
 import '../../../../../common/custom_shapes/primary_header_container.dart';
 import '../../../../../common/list_tiles/user_profile_tile.dart';
@@ -42,15 +43,22 @@ class ProfileScreen extends StatelessWidget {
                             .apply(color: AppColors.white),
                       ),
                     ),
-                    Obx(
-                      ()=> UserProfileTile(
-                        image: AppImages.animalIcon,
-                        userName: controller.user.value.fullName,
-                        userMail: controller.user.value.email,
-                        onEditPressed: () =>
-                            Get.to(() => const EditProfileScreen()),
-                      ),
-                    ),
+                    Obx(() {
+                      final networkImage = controller.user.value.profilePicture;
+                      final image = networkImage.isNotEmpty
+                          ? networkImage
+                          : AppImages.animalIcon;
+
+                      return controller.imageLoading.value
+                          ? const CustomShimmerEffects(width: 55, height: 55)
+                          : UserProfileTile(
+                              image: image,
+                              userName: controller.user.value.fullName,
+                              userMail: controller.user.value.email,
+                              onEditPressed: () =>
+                                  Get.to(() => const EditProfileScreen()),
+                            );
+                    }),
 
                     const SizedBox(height: AppSizes.spaceBtwSections),
 
@@ -150,13 +158,14 @@ class ProfileScreen extends StatelessWidget {
                   SizedBox(
                       width: double.infinity,
                       child: OutlinedButton(
-                          onPressed: ()=> AuthenticationRepository.instance.logout(),
+                          onPressed: () =>
+                              AuthenticationRepository.instance.logout(),
                           child: const Text(
                             'Logout',
                           ))),
                   const SizedBox(
                     height: AppSizes.spaceBtwSections / 2,
-                  ), 
+                  ),
                 ],
               ),
             ),
