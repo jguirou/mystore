@@ -59,7 +59,6 @@ class HomeScreen extends StatelessWidget {
 
                         /// Categories
                          HomeCategories(
-                           onTap: ()=> Get.to(()=> const ProductCategoryScreen( category: 'Sport',)),
                          ),
 
 

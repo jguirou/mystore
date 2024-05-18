@@ -4,6 +4,7 @@ import 'package:mystore/common/custom_shapes/search_container.dart';
 import 'package:mystore/common/layouts/grid_layout.dart';
 import 'package:mystore/common/brands/brand_card.dart';
 import 'package:mystore/common/products_card/card_counter_icon.dart';
+import 'package:mystore/domain/controller/category_controller.dart';
 import 'package:mystore/presentation/shop/store/brand/ui/screens/all_brand_screen.dart';
 import 'package:mystore/presentation/shop/store/store/ui/widgets/category_tab.dart';
 import 'package:mystore/utils/constants/colors.dart';
@@ -14,16 +15,15 @@ import '../../../../../../common/appBar/app_bar.dart';
 import '../../../../../../common/appBar/tab_bar.dart';
 import '../../../../../../common/texts/section_heading.dart';
 
-
-
 class StoreScreen extends StatelessWidget {
   const StoreScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     final dark = HelperFunctions.isDarkMode(context);
+    final categories = CategoryController.instance.featuredCategories;
     return DefaultTabController(
-      length: 5,
+      length: categories.length,
       child: Scaffold(
         appBar: CustomAppBar(
           title: Text(
@@ -67,7 +67,7 @@ class StoreScreen extends StatelessWidget {
                         title: 'Featured Brands',
                         showActionButton: true,
                         textColor: dark ? AppColors.white : AppColors.black,
-                        onPressed: ()=> Get.to(()=> const AllBrandScreen()),
+                        onPressed: () => Get.to(() => const AllBrandScreen()),
                       ),
                       const SizedBox(
                         height: AppSizes.spaceBtwItems,
@@ -88,41 +88,21 @@ class StoreScreen extends StatelessWidget {
                 ),
 
                 /// Tabs
-                bottom: const CustomTabBar(tabs: [
-                  Tab(
-                    child: Text("Sports"),
-                  ),
-                  Tab(
-                    child: Text("Furniture"),
-                  ),
-                  Tab(
-                    child: Text("Electronics"),
-                  ),
-                  Tab(
-                    child: Text("Clothes"),
-                  ),
-                  Tab(
-                    child: Text("Cosmetics"),
-                  ),
-                ]),
+                bottom: CustomTabBar(
+                  tabs: categories
+                      .map((category) => Tab(
+                            child: Text(category.name),
+                          ))
+                      .toList(),
+                ),
               ),
             ];
           },
-          body: const TabBarView(
-
-            children: [
-              CategoryTab(),
-              CategoryTab(),
-              CategoryTab(),
-              CategoryTab(),
-              CategoryTab(),
-
-            ],
+          body:  TabBarView(
+            children: categories.map((category) => CategoryTab(category: category,)).toList(),
           ),
         ),
       ),
     );
   }
 }
-
-

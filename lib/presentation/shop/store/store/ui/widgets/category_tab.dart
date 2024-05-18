@@ -4,11 +4,13 @@ import 'package:mystore/common/products_card/product_card_vertical.dart';
 import 'package:mystore/common/texts/section_heading.dart';
 
 import '../../../../../../common/brands/brand_showcase.dart';
+import '../../../../../../domain/entities/category/category_model.dart';
 import '../../../../../../utils/constants/image_strings.dart';
 import '../../../../../../utils/constants/sizes.dart';
 
 class CategoryTab extends StatelessWidget {
-  const CategoryTab({super.key});
+  const CategoryTab({super.key, required this.category});
+  final CategoryModel category;
 
 
   @override

@@ -1,18 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:mystore/common/images/circular_image.dart';
 
 import '../../utils/constants/colors.dart';
 import '../../utils/constants/sizes.dart';
 import '../../utils/helpers/helper_functions.dart';
+
 class VerticalImageText extends StatelessWidget {
   const VerticalImageText({
-    super.key, required this.image, required this.title, this.textColor = AppColors.white, this.backgroundColor, this.onTap,
+    super.key,
+    required this.image,
+    required this.title,
+    this.textColor = AppColors.white,
+    this.backgroundColor,
+    this.onTap,
+    this.isNetworkImage = true,
   });
 
   final String image;
   final String title;
-  final Color textColor ;
+  final Color textColor;
+
   final Color? backgroundColor;
   final void Function()? onTap;
+  final bool isNetworkImage;
 
   @override
   Widget build(BuildContext context) {
@@ -23,23 +33,32 @@ class VerticalImageText extends StatelessWidget {
         padding: const EdgeInsets.only(right: AppSizes.spaceBtwItems),
         child: Column(
           children: [
-            Container(
-              height: 56,
-              width: 56,
-              padding: const EdgeInsets.all(AppSizes.sm),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(100),
-                color: backgroundColor ?? (dark ? AppColors.black: AppColors.white),
-              ),
-              child:  Center(
-                child: Image(
-                    image: AssetImage(image), fit: BoxFit.cover, color: dark ? AppColors.light: AppColors.dark),
-              ),
+            /// circular icon
+            CircularImage(
+              image: image,
+              fit: BoxFit.fitWidth,
+              padding: AppSizes.sm * 4,
+              isNetworkImage: isNetworkImage,
+              backgroundColor: backgroundColor,
+              overlayColor: HelperFunctions.isDarkMode(context)
+                  ? AppColors.light
+                  : AppColors.dark,
             ),
-            const SizedBox(height: AppSizes.sm,),
+            const SizedBox(
+              height: AppSizes.sm,
+            ),
             SizedBox(
                 width: 55,
-                child: Text(title, style: Theme.of(context).textTheme.labelMedium!.apply(color: textColor), maxLines: 1, overflow: TextOverflow.ellipsis,)),
+                child: Text(
+                  title,
+                  style: Theme.of(context)
+                      .textTheme
+                      .labelMedium!
+                      .apply(color: textColor),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.center,
+                )),
           ],
         ),
       ),
