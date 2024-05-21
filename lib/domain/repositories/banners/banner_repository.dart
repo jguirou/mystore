@@ -4,26 +4,30 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:get/get.dart';
-import 'package:mystore/domain/entities/category/category_model.dart';
+
 
 import '../../../common/firebase/firebase_storage_service.dart';
 import '../../../utils/exceptions/firebase_auth_exceptions.dart';
 import '../../../utils/exceptions/firebase_exceptions.dart';
 import '../../../utils/exceptions/format_exceptions.dart';
+import '../../entities/banner/banner_model.dart';
 
-class CategoryRepository extends GetxController {
-  static CategoryRepository get instance => Get.find();
+class BannerRepository extends GetxController {
+  static BannerRepository get instance => Get.find();
 
   /// Variables
   final _db = FirebaseFirestore.instance;
 
-  /// Get all categories
-  Future<List<CategoryModel>> getAllCategories() async {
-    try {
-      final snapshot = await _db.collection('Categories').get();
 
-      final list = snapshot.docs.map((document) => CategoryModel.fromSnapshot(document)).toList();
-      return list;
+  /// Get all order related to the current user
+  Future<List<BannerModel>> fetchBanners() async {
+    try {
+
+
+      final result =  await _db.collection('Banners').where('active', isEqualTo: true).get();
+      return result.docs.map((document) => BannerModel.fromSnapshot(document)).toList();
+
+
     } on FirebaseAuthException catch (e) {
       throw CustomFirebaseAuthExceptions(e.code).message;
     } on FirebaseException catch (e) {
@@ -35,28 +39,28 @@ class CategoryRepository extends GetxController {
     }
   }
 
-  /// Get sub categories
 
-  /// Upload Categories to the cloud Firestore
-  Future<void> uploadDummyData( List<CategoryModel> categories) async {
+  /// Upload banners to the cloud firestore
+
+  Future<void> uploadBanners( List<BannerModel> banners) async {
     try {
 
       // Upload all the categories along with their images
       final storage =  Get.put(FirebaseStorageService());
 
       // Loop through each category
-      for(var category in categories){
+      for(var banner in banners){
         // Get imageData link from the local assets
-        final file = await storage.getImageDataFromAssets(category.image);
+        final file = await storage.getImageDataFromAssets(banner.imageUrl);
 
         // upload image and get its url
-        final url = await storage.uploadImageData('Categories', file, category.name);
+        final url = await storage.uploadImageData('Banners', file, banner.imageUrl);
 
         // Assign url to Category?image attribute
-        category.image = url;
+        banner.imageUrl = url;
 
         // Store category in FireStore
-        await _db.collection('Categories').doc(category.id).set(category.toJson());
+        await _db.collection('Banners').doc(banner.id).set(banner.toJson());
       }
 
     } on FirebaseAuthException catch (e) {
@@ -69,6 +73,7 @@ class CategoryRepository extends GetxController {
       throw 'Something went wrong. Please try again';
     }
   }
+
 }
 
 

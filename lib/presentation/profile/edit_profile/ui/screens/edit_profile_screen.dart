@@ -87,7 +87,7 @@ class EditProfileScreen extends StatelessWidget {
               ),
               const SizedBox(height: AppSizes.spaceBtwItems),
                EditProfileTile(
-                title: controller.user.value.id,
+                title: controller.user.value.id!,
                 leading: 'User ID',
                 trailing: Icons.copy,
               ),

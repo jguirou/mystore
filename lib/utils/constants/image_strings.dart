@@ -36,6 +36,23 @@ class AppImages{
   static const String promBanner1 = "assets/images/banners/promo-banner1.jpg";
   static const String promBanner2 = "assets/images/banners/promo-banner2.webp";
   static const String promBanner3 = "assets/images/banners/promo-banner3.webp";
+  static const String promBanner4 = "assets/images/banners/promo-banner4.jpg";
+  static const String promBanner5 = "assets/images/banners/promo-banner5.jpg";
+  static const String promBanner6 = "assets/images/banners/promo-banner6.jpg";
+  static const String promBanner7 = "assets/images/banners/promo-banner7.jpg";
+
+
+  // Brands
+  static const String nikeLogo = "assets/images/brands/nike.jpg";
+  static const String adidasLogo = "assets/images/brands/adidas.webp";
+  static const String kenwoodLogo = "assets/images/brands/kenwood.webp";
+  static const String ikeaLogo = "assets/images/brands/ikea.jpg";
+  static const String appleLogo = "assets/images/brands/apple.jpg";
+  static const String acerLogo = "assets/images/brands/acer.jpg";
+  static const String jordanLogo = "assets/images/brands/jordan.jpg";
+  static const String pumaLogo = "assets/images/brands/puma.jpg";
+  static const String zaraLogo = "assets/images/brands/zara.jpg";
+
 
 
   // Products

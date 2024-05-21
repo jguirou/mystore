@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:mystore/domain/repositories/authentication/authentication_repository.dart';
 import 'package:mystore/presentation/login/domain/controller/login_controller.dart';
 
 import '../utils/constants/colors.dart';

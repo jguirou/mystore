@@ -10,7 +10,6 @@ import '../../../../../../common/custom_shapes/search_container.dart';
 import '../../../../../../common/layouts/grid_layout.dart';
 import '../../../../../../common/texts/section_heading.dart';
 import '../../../all_product/ui/screen/all_product_screen.dart';
-import '../../../product_category/ui/screen/product_category_screen.dart';
 import '../widgets/home_app_bar.dart';
 import '../widgets/home_categories.dart';
 import '../widgets/promo_slider.dart';
@@ -58,7 +57,7 @@ class HomeScreen extends StatelessWidget {
                         const SizedBox(height: AppSizes.spaceBtwItems),
 
                         /// Categories
-                         HomeCategories(
+                         const HomeCategories(
                          ),
 
 
@@ -75,9 +74,9 @@ class HomeScreen extends StatelessWidget {
 
             /// promo slider
 
-            Padding(
-              padding: const EdgeInsets.all(AppSizes.defaultSpace),
-              child: PromoSlider(promoBanners: promoBanners),
+            const Padding(
+              padding: EdgeInsets.all(AppSizes.defaultSpace),
+              child: PromoSlider(),
             ),
             //const SizedBox(height: AppSizes.spaceBtwSections),
             Padding(

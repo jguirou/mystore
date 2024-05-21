@@ -4,7 +4,6 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:mystore/domain/repositories/authentication/authentication_repository.dart';
 import 'package:mystore/domain/repositories/user/user_repository.dart';
 import 'package:mystore/presentation/email_verification/ui/screen/email_verification_screen.dart';

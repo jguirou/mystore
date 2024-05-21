@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mystore/domain/repositories/user/user_repository.dart';
 import 'package:mystore/presentation/shop/home/cart/ui/screen/cart_screen.dart';
 import 'package:mystore/utils/shimmer/custom_shimmer.dart';
 

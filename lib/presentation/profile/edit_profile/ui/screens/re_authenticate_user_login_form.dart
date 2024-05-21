@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mystore/common/appBar/app_bar.dart';
 import 'package:mystore/domain/controller/user_controller.dart';
-import 'package:mystore/presentation/profile/edit_profile/domain/controller/update_name_controller.dart';
 import 'package:mystore/utils/constants/sizes.dart';
 
 import '../../../../../utils/constants/texts.dart';

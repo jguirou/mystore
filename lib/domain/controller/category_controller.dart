@@ -1,21 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:mystore/common/loaders/loaders.dart';
-import 'package:mystore/domain/repositories/authentication/authentication_repository.dart';
 import 'package:mystore/domain/repositories/categories/category_repository.dart';
-import 'package:mystore/domain/repositories/user/user_repository.dart';
-import 'package:mystore/presentation/login/ui/screen/login_screen.dart';
-import 'package:mystore/presentation/profile/edit_profile/ui/screens/re_authenticate_user_login_form.dart';
-import 'package:mystore/utils/constants/sizes.dart';
 
-import '../../presentation/sign_up/domain/controller/signup_controller.dart';
-import '../../utils/constants/image_strings.dart';
-import '../../utils/popup/full_screen_loader.dart';
 import '../entities/category/category_model.dart';
-import '../entities/user/user_model.dart';
 
 class CategoryController extends GetxController {
   static CategoryController get instance => Get.find();

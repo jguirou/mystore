@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mystore/domain/repositories/authentication/authentication_repository.dart';
-import 'package:mystore/presentation/account_created/ui/screen/success_screen.dart';
 import 'package:mystore/presentation/email_verification/domain/controller/email_verification_controller.dart';
-import 'package:mystore/presentation/login/ui/screen/login_screen.dart';
 
 import '../../../../utils/constants/image_strings.dart';
 import '../../../../utils/constants/sizes.dart';

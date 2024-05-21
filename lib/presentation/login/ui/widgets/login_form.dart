@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
-import 'package:get_storage/get_storage.dart';
-import 'package:mystore/navigation_menu.dart';
 import 'package:mystore/presentation/forgot_password/ui/screen/forgot_password_screen.dart';
 import 'package:mystore/presentation/sign_up/ui/screen/sign_up_screen.dart';
 

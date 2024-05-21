@@ -1,7 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:mystore/presentation/sign_up/domain/controller/signup_controller.dart';
 import 'package:mystore/utils/helpers/helper_functions.dart';
 

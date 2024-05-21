@@ -1,12 +1,10 @@
-import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:get/get.dart';
 import 'package:mystore/utils/formatters/formatter.dart';
 
 class UserModel {
    UserModel({
-    required this.id,
+     this.id,
     required this.firstName,
     required this.lastName,
     required this.username,
@@ -15,7 +13,7 @@ class UserModel {
     required this.profilePicture,
   });
 
-  final String id;
+  final String? id;
    String firstName;
    String lastName;
   final String username;
@@ -65,9 +63,6 @@ class UserModel {
 
    factory UserModel.fromSnapshot(DocumentSnapshot<Map<String, dynamic>> document) {
 
-     if (document.data == null) {
-       throw Exception('DocumentSnapshot does not contain data');
-     }
      final data = document.data()!;
 
      return UserModel(

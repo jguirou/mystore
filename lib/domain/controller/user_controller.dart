@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -50,7 +49,7 @@ class UserController extends GetxController {
     try {
       // First update Rx User and then check if user data is already stored. if not stored new data.
       await fetchUserRecord();
-      if (user.value.id.isEmpty) {
+      if (user.value.id!.isEmpty) {
         if (userCredential != null) {
           // Convert name to first and last name
           final nameParts =

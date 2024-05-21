@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mystore/presentation/forgot_password/domain/controller/forgot_password_controller.dart';
 import 'package:mystore/presentation/login/ui/screen/login_screen.dart';
-import 'package:mystore/presentation/reset_password/ui/screen/reset_password_screen.dart';
 import 'package:mystore/utils/constants/sizes.dart';
 import 'package:mystore/utils/validators/validation.dart';
 

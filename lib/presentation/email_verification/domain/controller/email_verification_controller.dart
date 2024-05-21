@@ -8,8 +8,6 @@ import 'package:mystore/utils/constants/texts.dart';
 
 import '../../../../common/loaders/loaders.dart';
 import '../../../../domain/repositories/authentication/authentication_repository.dart';
-import '../../../../utils/popup/full_screen_loader.dart';
-import '../../../sign_up/domain/controller/signup_controller.dart';
 
 class EmailVerificationController extends GetxController {
   static EmailVerificationController get instance => Get.find();

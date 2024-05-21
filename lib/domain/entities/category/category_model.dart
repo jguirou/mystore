@@ -1,8 +1,5 @@
-import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:get/get.dart';
-import 'package:mystore/utils/formatters/formatter.dart';
 
 class CategoryModel {
   CategoryModel({
@@ -48,20 +45,16 @@ class CategoryModel {
 
   factory CategoryModel.fromSnapshot(DocumentSnapshot<Map<String, dynamic>> document) {
 
-    if (document.data != null) {
-      final data = document.data()!;
+    final data = document.data()!;
 
-      return CategoryModel(
-        id: document.id,
-        name: data['name'] ?? '',
-        image: data['image'] ?? '',
-        parentId: data['parentId'] ?? '',
-        isFeatured: data['isFeatured'] ?? false,
-      );
+    return CategoryModel(
+      id: document.id,
+      name: data['name'] ?? '',
+      image: data['image'] ?? '',
+      parentId: data['parentId'] ?? '',
+      isFeatured: data['isFeatured'] ?? false,
+    );
 
-    } else {
-      return CategoryModel.empty();
-    }
-
+  
   }
 }
