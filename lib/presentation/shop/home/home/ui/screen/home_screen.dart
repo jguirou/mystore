@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mystore/common/products_card/product_card_vertical.dart';
+import 'package:mystore/common/shimmers/vertical_product_shimmer.dart';
 import 'package:mystore/utils/constants/colors.dart';
 import 'package:mystore/utils/constants/image_strings.dart';
 import 'package:mystore/utils/constants/sizes.dart';
@@ -9,6 +10,7 @@ import '../../../../../../common/custom_shapes/primary_header_container.dart';
 import '../../../../../../common/custom_shapes/search_container.dart';
 import '../../../../../../common/layouts/grid_layout.dart';
 import '../../../../../../common/texts/section_heading.dart';
+import '../../../../../../domain/controller/product_controller.dart';
 import '../../../all_product/ui/screen/all_product_screen.dart';
 import '../widgets/home_app_bar.dart';
 import '../widgets/home_categories.dart';
@@ -19,11 +21,8 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<String> promoBanners = [
-      AppImages.promBanner1,
-      AppImages.promBanner2,
-      AppImages.promBanner3,
-    ];
+    final controller = Get.put(ProductController());
+    
     final dark = HelperFunctions.isDarkMode(context);
     return Scaffold(
       body: SingleChildScrollView(
@@ -90,11 +89,23 @@ class HomeScreen extends StatelessWidget {
             ),
 
             /// popular products
-            GridLayout(
-              itemCount: 8,
-                itemBuilder: (context, index) {
-              return const ProductCardVertical();
-            }),
+            Obx(
+              (){
+                if(controller.isLoading.value) return  VerticalProductShimmer(itemCount: controller.featuredProducts.length);
+
+                if(controller.featuredProducts.isEmpty){
+                  return  Center(child: Text("No Data Found", style: Theme.of(context).textTheme.bodyMedium,));
+                } else {
+                  return GridLayout(
+                      itemCount: controller.featuredProducts.length,
+                      itemBuilder: (context, index) {
+                        return  ProductCardVertical(product: controller.featuredProducts[index]);
+                      });
+                }
+
+
+              }
+            ),
           ],
         ),
       ),

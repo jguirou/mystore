@@ -1,8 +1,10 @@
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mystore/common/images/rounded_image.dart';
 import 'package:mystore/common/products_card/rounded_container.dart';
+import 'package:mystore/domain/controller/product_controller.dart';
 import 'package:mystore/presentation/shop/product_detail/product_detail/ui/screen/product_detail_screen.dart';
 import 'package:mystore/utils/constants/colors.dart';
 import 'package:mystore/utils/constants/enums.dart';
@@ -10,6 +12,7 @@ import 'package:mystore/utils/constants/image_strings.dart';
 import 'package:mystore/utils/constants/sizes.dart';
 import 'package:mystore/utils/helpers/helper_functions.dart';
 
+import '../../domain/entities/products/product_model.dart';
 import '../icons/circular_icon.dart';
 import '../product_title_text.dart';
 import '../styles/shadow_style.dart';
@@ -17,13 +20,16 @@ import '../texts/brand_title_with_verified_icon.dart';
 import '../texts/product_price_text.dart';
 
 class ProductCardVertical extends StatelessWidget {
-  const ProductCardVertical({super.key});
+  const ProductCardVertical({super.key, required this.product});
+  final ProductModel product;
 
   @override
   Widget build(BuildContext context) {
+    final controller = ProductController.instance;
+    final salePercentage = controller.calculateSalePercentage(product.price, product.salePrice);
     final dark = HelperFunctions.isDarkMode(context);
     return GestureDetector(
-      onTap: ()=> Get.to(()=> const ProductDetailScreen()),
+      onTap: ()=> Get.to(()=>  ProductDetailScreen(product: product,)),
       child: Container(
         width: 180,
         padding: const EdgeInsets.all(1),
@@ -43,9 +49,10 @@ class ProductCardVertical extends StatelessWidget {
               child: Stack(
                 children: [
                   /// Thumbnail
-                  const RoundedImage(
-                    imageUrl: AppImages.promBanner2,
+                   RoundedImage(
+                    imageUrl: product.thumbnail,
                     applyImageRadius: true,
+                     isNetworkImage: true,
                   ),
 
                   /// sale tag
@@ -56,7 +63,7 @@ class ProductCardVertical extends StatelessWidget {
                           horizontal: AppSizes.xs, vertical: AppSizes.xs),
                       radius: AppSizes.sm,
                       backgroundColor: AppColors.secondary.withOpacity(0.8),
-                      child: Text('25%',
+                      child: Text('$salePercentage%',
                           style: Theme.of(context)
                               .textTheme
                               .labelLarge!
@@ -77,22 +84,22 @@ class ProductCardVertical extends StatelessWidget {
             ),
 
             /// Details
-            const Padding(
-              padding: EdgeInsets.only(left: AppSizes.sm),
+             Padding(
+              padding: const EdgeInsets.only(left: AppSizes.sm),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   /// Product tilte
                   ProductTitleText(
-                    title: 'Grey Nike sport shoe',
+                    title: product.title,
                     smallSize: true,
                     textAlign: TextAlign.left,
                   ),
-                  SizedBox(height: AppSizes.spaceBtwItems / 2),
+                  const SizedBox(height: AppSizes.spaceBtwItems / 2),
 
                   BrandTitleWithVerifiedIcon(
-                    title: 'Nike',
+                    title: product.brand!.name,
                     brandTextSizes: TextSizes.medium,
                     textAlign: TextAlign.left,
                   ),
@@ -106,10 +113,22 @@ class ProductCardVertical extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  /// prices
-                  const ProductPriceText(
-                    price: "119.99",
-                  ),
+                  /// Prices
+                   Flexible(
+                     child: Column(
+                       children: [
+                          if(product.productType == ProductType.single.toString() && product.salePrice > 0.0)
+                            Text(
+                              product.price.toString(),
+                              style: Theme.of(context).textTheme.labelMedium!.apply(decoration: TextDecoration.lineThrough),
+                            ),
+                         /// price show sale price as main price if sale exist
+                         ProductPriceText(
+                          price: controller.getProductPrice(product),
+                                           ),
+                       ],
+                     ),
+                   ),
                   Container(
                     decoration: const BoxDecoration(
                         color: AppColors.dark,

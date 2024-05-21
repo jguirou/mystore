@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mystore/presentation/shop/home/cart/ui/screen/cart_screen.dart';
-import 'package:mystore/utils/shimmer/custom_shimmer.dart';
+import 'package:mystore/common/shimmers/custom_shimmer.dart';
 
 import '../../../../../../common/appBar/app_bar.dart';
 import '../../../../../../common/products_card/card_counter_icon.dart';

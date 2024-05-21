@@ -7,8 +7,7 @@ class BrandModel {
     required this.name,
     required this.image,
      this.productsCount,
-    this.parentId = '',
-    required this.isFeatured,
+     this.isFeatured,
 
   });
 
@@ -16,22 +15,22 @@ class BrandModel {
   String name;
   String image;
   int? productsCount;
-  String parentId;
-  bool isFeatured;
+
+  bool? isFeatured;
 
 
 
 
 
   /// Empty helper function
-  static BrandModel empty () => BrandModel(id: '', name: '', productsCount: 0, image: '', parentId: '', isFeatured: false);
+  static BrandModel empty () => BrandModel(id: '', name: '', productsCount: 0, image: '', isFeatured: false);
   factory BrandModel.fromJson(Map<String, dynamic> json) {
     return BrandModel(
       id: json['id'] ?? '',
       name: json['name'] ?? '',
       image: json['image'] ?? '',
-      parentId: json['parentId'] ?? '',
-      productsCount: json['productsCount'] ?? '',
+      productsCount: json['productsCount'] is int ? json['productsCount'] : int.tryParse(json['productsCount'].toString()) ?? 0,
+
       isFeatured: json['isFeatured'] ?? false,
     );
   }
@@ -41,7 +40,6 @@ class BrandModel {
       'id': id,
       'name': name,
       'image': image,
-      'parentId': parentId,
       'productsCount': productsCount,
       'isFeatured': isFeatured,
     };
@@ -55,8 +53,8 @@ class BrandModel {
       id: document.id,
       name: data['name'] ?? '',
       image: data['image'] ?? '',
-      parentId: data['parentId'] ?? '',
-      productsCount: data['productsCount'] ?? '',
+      productsCount: data['productsCount'] is int ? data['productsCount'] : int.tryParse(data['productsCount'].toString()) ?? 0,
+
       isFeatured: data['isFeatured'] ?? false,
     );
 

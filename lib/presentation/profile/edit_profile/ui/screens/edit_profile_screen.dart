@@ -9,7 +9,7 @@ import 'package:mystore/utils/helpers/helper_functions.dart';
 import '../../../../../common/appBar/app_bar.dart';
 import '../../../../../common/images/circular_image.dart';
 import '../../../../../common/texts/section_heading.dart';
-import '../../../../../utils/shimmer/custom_shimmer.dart';
+import '../../../../../common/shimmers/custom_shimmer.dart';
 import '../widget/edit_profile_tile.dart';
 import 'change_name.dart';
 

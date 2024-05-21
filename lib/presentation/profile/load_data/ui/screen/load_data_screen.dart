@@ -9,6 +9,7 @@ import 'package:mystore/domain/repositories/categories/category_repository.dart'
 import 'package:mystore/utils/constants/colors.dart';
 
 import '../../../../../common/custom_shapes/primary_header_container.dart';
+import '../../../../../domain/repositories/products/product_repository.dart';
 import '../../../../../utils/constants/sizes.dart';
 
 class LoadDataScreen extends StatelessWidget {
@@ -35,6 +36,7 @@ class LoadDataScreen extends StatelessWidget {
                             .headlineMedium!
                             .apply(color: AppColors.white),
                       ),
+                      showBackArrow: true,
                     ),
 
                     ///
@@ -78,7 +80,7 @@ class LoadDataScreen extends StatelessWidget {
                     title: 'Upload Products',
                     subTitle: '',
                     icon: Icons.shopping_cart,
-                    trailing: IconButton(onPressed: (){}, icon: const Icon(Icons.upload)),
+                    trailing: IconButton(onPressed: ()=> ProductRepository.instance.uploadProducts(DummyData.products), icon: const Icon(Icons.upload)),
                     onTap: () {},
                   ),
                   SettingsMenuTile(

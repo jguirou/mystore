@@ -11,7 +11,7 @@ import 'package:mystore/presentation/profile/my_addresses/my_addresses/ui/screen
 import 'package:mystore/presentation/profile/my_orders/ui/screen%20/my_orders_screen.dart';
 import 'package:mystore/utils/constants/colors.dart';
 import 'package:mystore/utils/constants/image_strings.dart';
-import 'package:mystore/utils/shimmer/custom_shimmer.dart';
+import 'package:mystore/common/shimmers/custom_shimmer.dart';
 
 import '../../../../../common/custom_shapes/primary_header_container.dart';
 import '../../../../../common/list_tiles/user_profile_tile.dart';

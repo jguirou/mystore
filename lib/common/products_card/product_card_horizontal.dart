@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mystore/common/products_card/rounded_container.dart';
+import 'package:mystore/domain/controller/product_controller.dart';
+import 'package:mystore/domain/entities/products/product_model.dart';
 
 import '../../presentation/shop/product_detail/product_detail/ui/screen/product_detail_screen.dart';
 import '../../utils/constants/colors.dart';
@@ -20,7 +22,7 @@ class ProductCardHorizontal extends StatelessWidget {
   Widget build(BuildContext context) {
     final dark = HelperFunctions.isDarkMode(context);
     return GestureDetector(
-      onTap: ()=> Get.to(()=> const ProductDetailScreen()),
+      onTap: ()=> Get.to(()=>  ProductDetailScreen(product: ProductModel.empty(),)),
       child: Container(
         width: 310,
         padding: const EdgeInsets.all(1),

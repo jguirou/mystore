@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mystore/domain/controller/banner_controller.dart';
 import 'package:mystore/utils/constants/colors.dart';
-import 'package:mystore/utils/shimmer/custom_shimmer.dart';
+import 'package:mystore/common/shimmers/custom_shimmer.dart';
 
 import '../../../../../../common/custom_shapes/circular_container.dart';
 import '../../../../../../common/images/rounded_image.dart';

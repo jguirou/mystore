@@ -7,99 +7,136 @@ class ProductModel {
   ProductModel({
     required this.id,
     required this.title,
-    required this.description,
-    required this.brand,
-    required this.images,
-    required this.salePrice,
-    required this.sku,
-    required this.categoryId,
+    this.description,
+    this.brand,
+    this.date,
+    this.images,
+    this.salePrice = 0.0,
+    this.sku,
+    this.categoryId,
     required this.stock,
     required this.price,
     required this.thumbnail,
-    required this.isFeatured,
-    required this.productAttributes,
-     this.productVariations,
+    this.isFeatured,
+    this.productAttributes,
+    this.productVariations,
     required this.productType,
   });
 
   String id;
-  String title;
-  String description;
-  BrandModel brand;
-  List<String> images;
-  int salePrice;
-  String sku;
-  String categoryId;
   int stock;
-  int price;
+  String? sku;
+  double price;
+  String title;
+  DateTime? date;
+  double salePrice;
   String thumbnail;
-  bool isFeatured;
-  List<ProductAttributeModel> productAttributes;
+  bool? isFeatured;
+  String? description;
+  BrandModel? brand;
+  List<String>? images;
+  String? categoryId;
+  List<ProductAttributeModel>? productAttributes;
   List<ProductVariationModel>? productVariations;
   String productType;
+
+  /// Empty helper function
+  static ProductModel empty() => ProductModel(
+    id: '',
+    title: '',
+    stock: 0,
+    price: 0,
+    thumbnail: '',
+    productType: '',
+  );
 
   factory ProductModel.fromJson(Map<String, dynamic> json) {
     return ProductModel(
       id: json['id'] ?? '',
       title: json['title'] ?? '',
-      productAttributes:
-          List<ProductAttributeModel>.from(json['productAttributes'] ?? {}),
-      productVariations:
-          List<ProductVariationModel>.from(json['productVariations'] ?? {}),
+      productAttributes: (json['productAttributes'] as List<dynamic>?)?.map((e) => ProductAttributeModel.fromJson(e)).toList() ?? [],
+      productVariations: (json['productVariations'] as List<dynamic>?)?.map((e) => ProductVariationModel.fromJson(e)).toList() ?? [],
       description: json['description'] ?? '',
-      brand: BrandModel.fromJson(json['brand'] ?? {}),
-      images: List<String>.from(json['images'] ?? []),
-      salePrice: json['salePrice'] ?? 0,
+      brand: json['brand'] is String ? null : BrandModel.fromJson(json['brand']),
+      images: List<String>.from(json['images'] ?? []) ,
+      salePrice: json['salePrice'] ?? 0.0, // Convert string to double
       sku: json['sku'] ?? '',
       categoryId: json['categoryId'] ?? '',
       stock: json['stock'] ?? 0,
-      price: json['price'] ?? 0,
+      price: json['price'] ?? 0.0, // Convert string to double
       thumbnail: json['thumbnail'] ?? '',
       productType: json['productType'] ?? '',
       isFeatured: json['isFeatured'] ?? false,
     );
   }
 
+  factory ProductModel.fromSnapshot(DocumentSnapshot<Map<String, dynamic>> document) {
+    if (document.data() == null) return ProductModel.empty();
+    final data = document.data()!;
+    return ProductModel(
+      id: document.id,
+      title: data['title'] ?? '',
+      productType: data['productType'] ?? '',
+      productAttributes: (data['productAttributes'] as List<dynamic>?)?.map((e) => ProductAttributeModel.fromJson(e)).toList() ?? [],
+      productVariations: (data['productVariations'] as List<dynamic>?)?.map((e) => ProductVariationModel.fromJson(e)).toList() ?? [],
+      description: data['description'] ?? '',
+      brand: data['brand'] is String ? null : BrandModel.fromJson(data['brand']),
+      images: (data['images'] as List?)?.map((e) => e as String).toList() ?? [],
+      salePrice: data['salePrice'] ?? 0.0, // Convert string to double
+      sku: data['sku'] ?? '',
+      stock: data['stock'] ?? 0,
+      categoryId: data['categoryId'] ?? '',
+      price: data['price'] ?? 0.0, // Convert string to double
+      thumbnail: data['thumbnail'] ?? '',
+      isFeatured: data['isFeatured'] ?? false,
+    );
+  }
+
+
   Map<String, dynamic> toJson() {
     return {
       'id': id,
+      'sku': sku,
       'title': title,
       'description': description,
-      'brand': brand.toJson(),
-      'images': images,
-      'salePrice': salePrice,
-      'sku': sku,
+      'brand': brand!.toJson(),
+      'images': images ?? [],
+      'salePrice': salePrice, // Convert double to String
       'stock': stock,
       'categoryId': categoryId,
-      'price': price,
+      'price': price, // Convert double to String
       'thumbnail': thumbnail,
       'isFeatured': isFeatured,
-      'productAttributes': productAttributes,
-      'productVariations': productVariations,
+      'productAttributes': productAttributes?.map((e) => e.toJson()).toList(),
+      'productVariations': productVariations?.map((e) => e.toJson()).toList(),
       'productType': productType,
     };
   }
 
-  factory ProductModel.fromSnapshot(
-      DocumentSnapshot<Map<String, dynamic>> document) {
-    final data = document.data()!;
+
+
+
+  factory ProductModel.fromQuerySnapshot(QueryDocumentSnapshot<Object?> document) {
+    final data = document.data() as Map<String, dynamic>;
 
     return ProductModel(
       id: document.id,
       title: data['title'] ?? '',
       productType: data['productType'] ?? '',
-      productAttributes:
-          List<ProductAttributeModel>.from(data['productAttributes'] ?? {}),
-      productVariations:
-          List<ProductVariationModel>.from(data['productVariations'] ?? {}),
+      productAttributes: (data['productAttributes'] as List?)
+          ?.map((e) => ProductAttributeModel.fromJson(e))
+          .toList(),
+      productVariations: (data['productVariations'] as List?)
+          ?.map((e) => ProductVariationModel.fromJson(e))
+          .toList(),
       description: data['description'] ?? '',
-      brand: BrandModel.fromJson(data['brand'] ?? {}),
-      images: List<String>.from(data['images'] ?? []),
-      salePrice: data['salePrice'] ?? 0,
+      brand: data['brand'] != null ? BrandModel.fromJson(data['brand']) : null,
+      images: (data['images'] as List?)?.map((e) => e as String).toList() ?? [],
+      salePrice: (data['salePrice'] as num?)?.toDouble() ?? 0.0,
       sku: data['sku'] ?? '',
       stock: data['stock'] ?? 0,
       categoryId: data['categoryId'] ?? '',
-      price: data['price'] ?? 0,
+      price: (data['price'] as num?)?.toDouble() ?? 0.0,
       thumbnail: data['thumbnail'] ?? '',
       isFeatured: data['isFeatured'] ?? false,
     );

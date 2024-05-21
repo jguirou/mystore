@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mystore/utils/constants/sizes.dart';
-import 'package:mystore/utils/shimmer/custom_shimmer.dart';
+import 'package:mystore/common/shimmers/custom_shimmer.dart';
 
 class CategoryShimmer extends StatelessWidget {
   const CategoryShimmer({super.key,  this.itemCount = 6});

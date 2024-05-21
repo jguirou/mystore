@@ -3,14 +3,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ProductAttributeModel {
   ProductAttributeModel({
-    required this.name,
-    required this.values,
+     this.name,
+     this.values,
 
 
   });
 
-  String name;
-  List<String> values;
+  String? name;
+  final List<String>? values;
 
 
 
@@ -18,10 +18,13 @@ class ProductAttributeModel {
 
 
 
-  factory ProductAttributeModel.fromJson(Map<String, dynamic> json) {
+  factory ProductAttributeModel.fromJson(Map<String, dynamic> document) {
+    final data = document;
+    if(data.isEmpty) return ProductAttributeModel();
+
     return ProductAttributeModel(
-      name: json['name'] ?? '',
-      values: json['values'] ?? '',
+      name: data.containsKey('name') ? data['name'] : '',
+      values: List<String>.from(data['values']),
 
     );
   }

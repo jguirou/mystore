@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mystore/common/products_card/product_card_vertical.dart';
 
+import '../../domain/entities/products/product_model.dart';
 import '../../utils/constants/sizes.dart';
 import '../layouts/grid_layout.dart';
 
@@ -37,7 +38,7 @@ class SortableProducts extends StatelessWidget {
         GridLayout(
           itemCount: 20,
           itemBuilder: (_ , index ) {
-            return const ProductCardVertical();
+            return  ProductCardVertical(product: ProductModel.empty(),);
           },
 
         ),
