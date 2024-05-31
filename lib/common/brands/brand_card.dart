@@ -33,7 +33,7 @@ class BrandCard extends StatelessWidget {
           children: [
             Flexible(
               child: CircularImage(
-                image: AppImages.clothIcon,
+                image: AppImages.nikeLogo,
                 backgroundColor: Colors.transparent,
                 overlayColor: dark
                     ? AppColors.white

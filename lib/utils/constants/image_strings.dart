@@ -43,15 +43,15 @@ class AppImages{
 
 
   // Brands
-  static const String nikeLogo = "assets/images/brands/nike.jpg";
-  static const String adidasLogo = "assets/images/brands/adidas.webp";
-  static const String kenwoodLogo = "assets/images/brands/kenwood.webp";
-  static const String ikeaLogo = "assets/images/brands/ikea.jpg";
-  static const String appleLogo = "assets/images/brands/apple.jpg";
-  static const String acerLogo = "assets/images/brands/acer.jpg";
-  static const String jordanLogo = "assets/images/brands/jordan.jpg";
-  static const String pumaLogo = "assets/images/brands/puma.jpg";
-  static const String zaraLogo = "assets/images/brands/zara.jpg";
+  static const String nikeLogo = "assets/images/brands/nike-logo.png";
+  static const String adidasLogo = "assets/images/brands/adidas-logo.png";
+  static const String kenwoodLogo = "assets/images/brands/kenwood-logo.png";
+  static const String ikeaLogo = "assets/images/brands/ikea-logo.webp";
+  static const String appleLogo = "assets/images/brands/apple-logo.png";
+  static const String acerLogo = "assets/images/brands/acer-logo.png";
+  static const String jordanLogo = "assets/images/brands/jordan-logo.svg.png";
+  static const String pumaLogo = "assets/images/brands/puma-logo.png";
+  static const String zaraLogo = "assets/images/brands/zara-logo.png";
 
 
 
@@ -59,6 +59,19 @@ class AppImages{
   static const String productImage1 = "assets/images/products/nike-product-image-1.jpeg";
   static const String productImage2 = "assets/images/products/nike-product-image-2.jpeg";
   static const String productImage3 = "assets/images/products/nike-product-image-3.jpeg";
+  static const String nikeGreen = "assets/images/products/nike-green.png";
+  static const String nikeWhite = "assets/images/products/nike-white.png";
+  static const String nikeBlack = "assets/images/products/nike-black.png";
+
+  static const String nikeTShirtYellow = "assets/images/products/nike-tshirt-yellow.jpg.webp";
+  static const String nikeTShirtWhite = "assets/images/products/nike-tshirt-white.jpg.webp";
+  static const String nikeTShirtBlack = "assets/images/products/nike-tshirt-black.jpg";
+
+
+  static const String appleIphone15Black = "assets/images/products/apple-iphone-15-black.jpg";
+  static const String appleIphone15Pink = "assets/images/products/apple-iphone-15-pink.jpg";
+  static const String appleIphone15White = "assets/images/products/apple-iphone-15-white.jpeg";
+
 
   // Payment
   static const String paypalImage = "assets/images/payment/Paypal-logo.jpg";

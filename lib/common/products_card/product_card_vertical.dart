@@ -44,16 +44,19 @@ class ProductCardVertical extends StatelessWidget {
             /// Thumbnail, wishList button, discount tag
             RoundedContainer(
               height: 180,
+              width: 180,
               padding: const EdgeInsets.all(AppSizes.sm),
               backgroundColor: dark ? AppColors.dark : AppColors.light,
               child: Stack(
                 children: [
                   /// Thumbnail
-                   RoundedImage(
-                    imageUrl: product.thumbnail,
-                    applyImageRadius: true,
-                     isNetworkImage: true,
-                  ),
+                   Center(
+                     child: RoundedImage(
+                      imageUrl: product.thumbnail,
+                      applyImageRadius: true,
+                       isNetworkImage: true,
+                                       ),
+                   ),
 
                   /// sale tag
                   Positioned(

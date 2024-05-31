@@ -50,11 +50,7 @@ class CategoryTab extends StatelessWidget {
                 onPressed: (){},
               ),
               const SizedBox(height: AppSizes.spaceBtwItems,),
-              GridLayout(itemCount: 4,
-                  itemBuilder: (context, index) =>  ProductCardVertical( product: ProductModel.empty(),
-
-                  )
-              )
+              const Center(child: Text('Coming soon...', textAlign: TextAlign.center,),)
             ],
           ),
         )
