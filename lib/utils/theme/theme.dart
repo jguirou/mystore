@@ -36,6 +36,7 @@ class AppTheme {
     primaryColor: Colors.blue,
     scaffoldBackgroundColor: Colors.black,
     textTheme: MyStoreTextTheme.darkTextTheme,
+
     elevatedButtonTheme: MyStoreElevatedButtonTheme.darkElevatedButtonTheme,
     appBarTheme: MyStoreAppBarTheme.darkAppBarTheme,
     bottomSheetTheme: MyStoreBottomSheetTheme.darkBottomSheetTheme,
