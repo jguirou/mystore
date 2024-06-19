@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mystore/common/products_card/product_card_vertical.dart';
@@ -51,7 +52,10 @@ class HomeScreen extends StatelessWidget {
                           title: 'Popular categories',
                           showActionButton: false,
                           textColor: AppColors.white,
-                          onPressed: ()=> Get.to(()=> const AllProductScreen()),
+                          onPressed: ()=> Get.to(()=>  const AllProductScreen(
+                            title: 'Popular categories',
+                            //futureMethod: controller.fetchAllFeaturedProducts(),
+                          )),
                         ),
                         const SizedBox(height: AppSizes.spaceBtwItems),
 
@@ -81,10 +85,13 @@ class HomeScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(left: AppSizes.defaultSpace, right: AppSizes.defaultSpace),
               child: SectionHeading(
-                title: 'Popular categories',
+                title: 'Popular products',
                 showActionButton: true,
                 textColor: dark ? AppColors.white: AppColors.dark ,
-                onPressed: ()=> Get.to(()=> const AllProductScreen()),
+                onPressed: ()=> Get.to(()=> AllProductScreen(
+                  title: 'Popular products',
+                  futureMethod: controller.fetchAllFeaturedProducts(),
+                )),
               ),
             ),
 

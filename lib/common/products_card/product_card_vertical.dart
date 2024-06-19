@@ -102,7 +102,7 @@ class ProductCardVertical extends StatelessWidget {
                   const SizedBox(height: AppSizes.spaceBtwItems / 2),
 
                   BrandTitleWithVerifiedIcon(
-                    title: product.brand!.name,
+                    title: product.brand?.name ?? '',
                     brandTextSizes: TextSizes.medium,
                     textAlign: TextAlign.left,
                   ),

@@ -37,8 +37,8 @@ class ProductVariationModel {
           Map<String, String>.from(json['attributesValues'] ?? []),
       image: json['images'] ?? [],
       stock: json['stock'] ?? 0,
-      price: json['price'] ?? 0.0,
-      salePrice: json['salePrice'] ?? 0.0,
+      price: (json['price'] as num?)?.toDouble() ?? 0.0,
+      salePrice: (json['salePrice'] as num?)?.toDouble() ?? 0.0,
     );
   }
 
@@ -64,8 +64,8 @@ class ProductVariationModel {
       attributesValues: data['attributesValues'] ?? [],
       image: data['images'] ?? [],
       stock: data['stock'] ?? 0,
-      price: double.parse((data['price'] ?? 0.0).toString()),
-      salePrice: double.parse((data['salePrice'] ?? 0.0).toString()),
+      price: (data['price'] as num?)?.toDouble() ?? 0.0,
+      salePrice: (data['salePrice'] as num?)?.toDouble() ?? 0.0,
     );
   }
 }

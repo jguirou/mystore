@@ -4,7 +4,7 @@ import 'package:mystore/utils/constants/sizes.dart';
 import 'package:mystore/common/shimmers/custom_shimmer.dart';
 
 class VerticalProductShimmer extends StatelessWidget {
-  const VerticalProductShimmer({super.key, required this.itemCount});
+  const VerticalProductShimmer({super.key,  this.itemCount = 4});
 
   final int itemCount;
 

@@ -34,6 +34,8 @@ class ProductController extends GetxController {
       final productRepo = Get.put(ProductRepository());
       final featuredProducts = await productRepo.getFeaturedProducts();
 
+      print('fecthing featured products');
+
       // Assign banners
       this.featuredProducts.assignAll(featuredProducts);
 
@@ -45,7 +47,18 @@ class ProductController extends GetxController {
       isLoading.value = false;
     }
   }
+  Future<List<ProductModel>> fetchAllFeaturedProducts() async {
+    try {
 
+      final productRepo = Get.put(ProductRepository());
+      final products = await productRepo.getFeaturedProducts();
+      return products;
+
+    } catch (e) {
+      Loaders.errorSnackBar(title: 'Oh Snap', message: e.toString());
+      return [];
+    }
+  }
   /// Get the product price or price range for variations
   String getProductPrice(ProductModel product){
     double smallestPrice = double.infinity;
