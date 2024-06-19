@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mystore/common/texts/section_heading.dart';
 import 'package:mystore/domain/entities/products/product_model.dart';
+import 'package:mystore/utils/constants/enums.dart';
 import 'package:mystore/utils/constants/sizes.dart';
 import 'package:mystore/utils/helpers/helper_functions.dart';
 import 'package:readmore/readmore.dart';
@@ -26,7 +27,7 @@ class ProductDetailScreen extends StatelessWidget {
         child: Column(
           children: [
             /// Product Image Slider
-            const ProductImageSlider(),
+            ProductImageSlider(product: product,),
 
             /// Product details
             Padding(
@@ -41,11 +42,11 @@ class ProductDetailScreen extends StatelessWidget {
 
                   /// Price Title Stock & brand
                   ///
-                  const ProductMetaData(),
+                   ProductMetaData(product: product),
 
                   /// Attributes
-                  const ProductAttribute(),
-                  const SizedBox(height: AppSizes.spaceBtwSections),
+                  if(product.productType == ProductType.variable.toString())  ProductAttribute(product: product),
+                  if(product.productType == ProductType.variable.toString()) const SizedBox(height: AppSizes.spaceBtwSections),
 
                   /// Checkout button
                   SizedBox(
@@ -57,8 +58,8 @@ class ProductDetailScreen extends StatelessWidget {
                   /// Description
                   const SectionHeading(
                       title: 'Description', showActionButton: false),
-                  const ReadMoreText(
-                    'This is a product description for grey nike shoe. There are more things that can be added but i am just practicing it',
+                   ReadMoreText(
+                    product.description ?? '',
                     trimLines: 2,
                     trimMode: TrimMode.Line,
                     trimCollapsedText: 'Show more',

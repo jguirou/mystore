@@ -34,7 +34,7 @@ class NavigationMenu extends StatelessWidget {
                 label: AppTexts.store
             ),
             NavigationDestination(
-                icon: Icon(Icons.heart_broken),
+                icon: Icon(Icons.favorite),
                 label: AppTexts.wishList
             ),
             NavigationDestination(
