@@ -9,6 +9,7 @@ import 'package:mystore/domain/repositories/categories/category_repository.dart'
 import 'package:mystore/utils/constants/colors.dart';
 
 import '../../../../../common/custom_shapes/primary_header_container.dart';
+import '../../../../../domain/repositories/brands/brand_repository.dart';
 import '../../../../../domain/repositories/products/product_repository.dart';
 import '../../../../../utils/constants/sizes.dart';
 
@@ -18,6 +19,7 @@ class LoadDataScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(CategoryRepository());
+    final brandController = Get.put(BrandRepository());
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -72,7 +74,7 @@ class LoadDataScreen extends StatelessWidget {
                     title: 'Upload Brands',
                     subTitle: '',
                     icon: Icons.store,
-                    trailing: IconButton(onPressed: (){}, icon: const Icon(Icons.upload)),
+                    trailing: IconButton(onPressed: ()=> brandController.uploadDummyData(DummyData.brands), icon: const Icon(Icons.upload)),
                     onTap: () {},
                   ),
 

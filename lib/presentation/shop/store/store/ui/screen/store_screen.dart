@@ -4,15 +4,20 @@ import 'package:mystore/common/custom_shapes/search_container.dart';
 import 'package:mystore/common/layouts/grid_layout.dart';
 import 'package:mystore/common/brands/brand_card.dart';
 import 'package:mystore/common/products_card/card_counter_icon.dart';
+import 'package:mystore/common/shimmers/custom_shimmer.dart';
+import 'package:mystore/domain/controller/brand_controller.dart';
 import 'package:mystore/domain/controller/category_controller.dart';
 import 'package:mystore/presentation/shop/store/brand/ui/screens/all_brand_screen.dart';
+import 'package:mystore/presentation/shop/store/brand/ui/screens/brand_products.dart';
 import 'package:mystore/presentation/shop/store/store/ui/widgets/category_tab.dart';
 import 'package:mystore/utils/constants/colors.dart';
 import 'package:mystore/utils/constants/sizes.dart';
 import 'package:mystore/utils/helpers/helper_functions.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../../../../../../common/appBar/app_bar.dart';
 import '../../../../../../common/appBar/tab_bar.dart';
+import '../../../../../../common/shimmers/brands_shimmer.dart';
 import '../../../../../../common/texts/section_heading.dart';
 
 class StoreScreen extends StatelessWidget {
@@ -21,6 +26,7 @@ class StoreScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dark = HelperFunctions.isDarkMode(context);
+    final brandController = Get.put(BrandController());
     final categories = CategoryController.instance.featuredCategories;
     return DefaultTabController(
       length: categories.length,
@@ -74,15 +80,25 @@ class StoreScreen extends StatelessWidget {
                       ),
 
                       /// Brand Grid
-                      GridLayout(
-                          mainAxisExtent: 80,
-                          itemCount: 4,
-                          itemBuilder: (context, index) {
-                            return BrandCard(
-                              showBorder: true,
-                              onTap: () {},
-                            );
-                          }),
+                      Obx(
+                        (){
+                          if(brandController.isLoading.value) return const BrandsShimmer();
+                          if(brandController.featuredBrands.isEmpty){
+                            return Center(child: Text('No Data Found!', style: Theme.of(context).textTheme.bodyMedium!.apply(color: Colors.white),),);
+                          }
+                          return GridLayout(
+                              mainAxisExtent: 80,
+                              itemCount: brandController.featuredBrands.length,
+                              itemBuilder: (context, index) {
+                                final brand = brandController.featuredBrands[index];
+                                return BrandCard(
+                                  showBorder: true,
+                                  brand: brand,
+                                  onTap: ()=> Get.to(()=> BrandProducts(brand: brand)),
+                                );
+                              });
+                        }
+                      ),
                     ],
                   ),
                 ),

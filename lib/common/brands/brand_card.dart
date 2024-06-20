@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mystore/common/products_card/rounded_container.dart';
 
+import '../../domain/entities/brands/brand_model.dart';
 import '../../utils/constants/colors.dart';
 import '../../utils/constants/enums.dart';
 import '../../utils/constants/image_strings.dart';
@@ -12,13 +13,12 @@ class BrandCard extends StatelessWidget {
   const BrandCard({
     super.key,
     this.showBorder = true, this.onTap,
-     this.brandTitle = 'Nike',  this.brandSubtitle = '256 products',
+     required this.brand,
   });
 
   final bool showBorder;
   final void Function()? onTap;
-  final String brandTitle;
-  final String brandSubtitle;
+  final BrandModel brand;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +33,8 @@ class BrandCard extends StatelessWidget {
           children: [
             Flexible(
               child: CircularImage(
-                image: AppImages.nikeLogo,
+                isNetworkImage: true,
+                image: brand.image,
                 backgroundColor: Colors.transparent,
                 overlayColor: dark
                     ? AppColors.white
@@ -50,7 +51,7 @@ class BrandCard extends StatelessWidget {
                 CrossAxisAlignment.start,
                 children: [
                    BrandTitleWithVerifiedIcon(
-                    title: brandTitle,
+                    title: brand.name,
                     textAlign: TextAlign.start,
                     brandTextSizes: TextSizes.large,
                   ),
@@ -58,7 +59,8 @@ class BrandCard extends StatelessWidget {
                     width: AppSizes.spaceBtwItems / 1.5,
                   ),
                   Text(
-                    brandSubtitle,
+                      '${brand.productsCount ?? 0} products'
+                    ,
                     style: Theme.of(context)
                         .textTheme
                         .labelMedium,
