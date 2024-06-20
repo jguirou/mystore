@@ -59,6 +59,7 @@ class ProductCardVertical extends StatelessWidget {
                    ),
 
                   /// sale tag
+                 if(salePercentage != null)
                   Positioned(
                     top: 12,
                     child: RoundedContainer(
