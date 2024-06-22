@@ -93,6 +93,22 @@ class LoadDataScreen extends StatelessWidget {
                     onTap: () {},
                   ),
 
+                  SettingsMenuTile(
+                    title: 'Upload Brand Category',
+                    subTitle: '',
+                    icon: Icons.store,
+                    trailing: IconButton(onPressed: ()=> controller.uploadBrandCategory(DummyData.brandCategory), icon: const Icon(Icons.upload)),
+                    onTap: () {},
+                  ),
+
+                  SettingsMenuTile(
+                    title: 'Upload Product category',
+                    subTitle: '',
+                    icon: Icons.store,
+                    trailing: IconButton(onPressed: ()=> controller.uploadProductCategory(DummyData.productCategories), icon: const Icon(Icons.upload)),
+                    onTap: () {},
+                  ),
+
 
                 ],
               ),

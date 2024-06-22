@@ -5,6 +5,7 @@ import 'package:mystore/domain/entities/user/user_model.dart';
 import 'package:mystore/utils/constants/image_strings.dart';
 
 import '../domain/entities/banner/banner_model.dart';
+import '../domain/entities/brands/brand_category_model.dart';
 import '../domain/entities/brands/brand_model.dart';
 
 import '../domain/entities/category/category_model.dart';

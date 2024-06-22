@@ -29,7 +29,7 @@ class BrandProducts extends StatelessWidget {
               BrandCard(showBorder: true, brand: brand,),
                const SizedBox(height: AppSizes.spaceBtwItems),
               FutureBuilder(
-                future: brandController.getBrandProducts(brand.id),
+                future: brandController.getBrandProducts(brandId:brand.id),
                 builder: (context, snapshot) {
                   const loader = VerticalProductShimmer();
                   final widget = CloudHelperFunctions.checkMultiRecordState(snapshot: snapshot, loader: loader);

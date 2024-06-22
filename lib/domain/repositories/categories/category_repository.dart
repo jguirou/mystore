@@ -10,6 +10,8 @@ import '../../../common/firebase/firebase_storage_service.dart';
 import '../../../utils/exceptions/firebase_auth_exceptions.dart';
 import '../../../utils/exceptions/firebase_exceptions.dart';
 import '../../../utils/exceptions/format_exceptions.dart';
+import '../../entities/brands/brand_category_model.dart';
+import '../../entities/products/product_category_model.dart';
 
 class CategoryRepository extends GetxController {
   static CategoryRepository get instance => Get.find();
@@ -57,6 +59,49 @@ class CategoryRepository extends GetxController {
 
         // Store category in FireStore
         await _db.collection('Categories').doc(category.id).set(category.toJson());
+      }
+
+    } on FirebaseAuthException catch (e) {
+      throw CustomFirebaseAuthExceptions(e.code).message;
+    } on FirebaseException catch (e) {
+      throw CustomFirebaseExceptions(e.code).message;
+    } on FormatException catch (_) {
+      throw CustomFormatException();
+    } catch (e) {
+      throw 'Something went wrong. Please try again';
+    }
+  }
+
+
+  Future<void> uploadProductCategory( List<ProductCategoryModel> productCategories) async {
+    try {
+
+      // Loop through each category
+      for(var productCategory in productCategories){
+
+        // Store category in FireStore
+        await _db.collection('ProductCategory').doc().set(productCategory.toJson());
+      }
+
+    } on FirebaseAuthException catch (e) {
+      throw CustomFirebaseAuthExceptions(e.code).message;
+    } on FirebaseException catch (e) {
+      throw CustomFirebaseExceptions(e.code).message;
+    } on FormatException catch (_) {
+      throw CustomFormatException();
+    } catch (e) {
+      throw 'Something went wrong. Please try again';
+    }
+  }
+
+  Future<void> uploadBrandCategory( List<BrandCategoryModel> brandCategories) async {
+    try {
+
+      // Loop through each category
+      for(var brandCategory in brandCategories){
+
+        // Store category in FireStore
+        await _db.collection('BrandCategory').doc().set(brandCategory.toJson());
       }
 
     } on FirebaseAuthException catch (e) {

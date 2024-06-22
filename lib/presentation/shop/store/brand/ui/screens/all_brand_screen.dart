@@ -29,7 +29,7 @@ class AllBrandScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               /// Title
-              Text('Brand', style: Theme.of(context).textTheme.headlineLarge, textAlign: TextAlign.start,),
+              Text('Brands', style: Theme.of(context).textTheme.headlineLarge, textAlign: TextAlign.start,),
               const SizedBox(height: AppSizes.spaceBtwItems),
               /// Brand Grid
               Obx(
